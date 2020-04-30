@@ -1,0 +1,23 @@
+#!/bin/sh
+# GoCD Agent Install
+
+. ./template.conf
+
+echo "Fetching agent install"
+echo fetch https://download.gocd.org/binaries/$go_version/generic/go-agent-$go_version.zip -o /root/go-agent.zip
+
+echo "Creating"
+# loop through agents
+i=1
+while [ $i -le $gocd_num_agents ];
+do 
+    gocd_agent_folder="agent-${i}"
+    echo "Extracting agent into '${gocd_home}/${gocd_agent_folder}'"
+    echo unzip -q -j -d $gocd_home/$gocd_agent_folder /root/go-agent.zip
+    echo "Setting ownership on '${gocd_agent_folder}'"
+    echo chown -R $gocd_user_name:$gocd_group_name $gocd_home/$gocd_agent_folder
+
+    i=$((i+1))
+done
+
+# set server ip in  wrapper-config/wrapper-properties.conf

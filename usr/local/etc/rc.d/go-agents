@@ -1,0 +1,42 @@
+#!/bin/sh
+
+. /etc/rc.subr
+
+name="go-agents"
+rcvar="go_agents_enable"
+
+: ${go_agents_enable:=NO}
+: ${go_agents_user:=gocd}
+: ${go_agents_group:=gocd}
+: ${go_agents_chdir=/usr/local/gocd}  
+
+start_cmd="go_agents_start"
+stop_cmd="go_agents_stop"
+restart_cmd="go_agents_restart"
+
+agents_list=$(ls -d /usr/local/gocd/agent*)
+                                                                              
+go_agents_start()                                                             
+{
+	for i in $agents_list
+	do
+        	su gocd $i/bin/go-agent start
+	done
+}
+go_agents_stop()
+{
+        for i in $agents_list
+        do
+                $i/bin/go-agent stop
+        done
+}
+go_agents_restart()
+{
+	for i in $agents_list
+        do
+                su gocd $i/bin/go-agent restart
+        done
+}                                                                             
+                                                                              
+load_rc_config $name                                                          
+run_rc_command "$1"  

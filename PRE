@@ -1,0 +1,8 @@
+# Add GoCD user and group first
+
+# add group
+echo "Creating group '${gocd_group_name}' with id '${gocd_group_id}'"
+pw groupadd -q -n $gocd_group_name -g $gocd_group_id
+# add user
+echo "Creating user 'gocd' with id '6039' with home at '${gocd_home}'"
+pw useradd -q -n $gocd_user_name -g $gocd_group_name -u $gocd_user_id -m -k $gocd_home -s /bin/sh
