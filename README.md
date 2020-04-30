@@ -14,7 +14,7 @@ bastille template TARGET /usr/local/bastille/templates/gocd-agent
 ## Description
 A 'GoCD Agent' runs tasks assigned to it by a 'GoCD Server'.
 
-By default this template will create 2 sandboxed agents under '/usr/local/gocd' named 'agent-1' and 'agent-2'.
+By default this template will create 2 sandboxed agents under '/usr/local/gocd' named 'agent-1' and 'agent-2' running as the 'gocd' user.
 
 This each agent will accept tasks from a 'GoCD Server' instance, you can download a template from here: 
 https://github.com/dijitaltrix/gocd-server
